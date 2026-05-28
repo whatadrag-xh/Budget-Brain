@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Budget Brain</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Budget Brain's logo"></div>
+                <div class="brand-name">Budget Brain</div>
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#transactions">Transactions</a></li>
+                    <li><a href="#analysis">Analysis</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="dashboard">
+                <div id="total-income"><p>Total Income</p>
+                                       <p>{{ summary.total_income }}</p>
+                </div>
+                <div id="total-expenses"><p>Total Expenses</p>
+                                         <p>{{ summary.total_expenses }}</p>
+                </div>
+                <div id="net-balance"><p>Net Balance</p>
+                                      <p>{{ summary.net }}</p>
+                </div>
+            </section>
+            <section id="transactions">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.date }}</td>
+                            <td>{{ transaction.description }}</td>
+                            <td>{{ transaction.cateogry }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.type }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>
