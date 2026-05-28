@@ -46,6 +46,11 @@ def delete_transaction(id):
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute("DELETE FROM transactions WHERE id = ?", (id,))
 
+def clear_db():
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute("DELETE FROM transactions")
+    print("Database cleared")
+    
 if __name__ == "__main__":
     init_db()
 

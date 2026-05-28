@@ -1,6 +1,6 @@
 import random
 from datetime import date, timedelta
-from database import init_db, add_transaction
+from database import init_db, add_transaction, clear_db
 
 EXPENSE_CATEGORIES = {
     "Rent":              (1000,  1000),
@@ -56,4 +56,6 @@ def seed(months):
             add_transaction(str(random_date), income, income_amt, income, "income")           
 
 if __name__ == "__main__":
-
+    clear_db()
+    seed(6)
+    print("Seed data generated!")

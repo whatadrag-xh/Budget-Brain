@@ -19,6 +19,8 @@ def chart_spending_by_category():
     fig, ax = plt.subplots(figsize=(8,5))
     sns.barplot(data = category_totals, x= "category", y= "amount", ax= ax)
     os.makedirs("charts", exist_ok= True)
+    plt.xticks(rotation= 45, ha="right")
+    plt.tight_layout()
     fig.savefig("charts/spending_by_category.png")
     plt.close(fig)
 
@@ -29,6 +31,8 @@ def chart_monthly_trend():
     fig, ax = plt.subplots(figsize=(8,5))
     sns.barplot(data = monthly_transactions_df, x= "month", y= "amount", hue="type", ax= ax)
     os.makedirs("charts", exist_ok= True)
+    plt.xticks(rotation= 45, ha="right")
+    plt.tight_layout()
     fig.savefig("charts/monthly_trend.png")
     plt.close(fig)
 
