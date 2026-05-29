@@ -14,7 +14,7 @@
                 <ul>
                     <li><a href="#dashboard">Dashboard</a></li>
                     <li><a href="#transactions">Transactions</a></li>
-                    <li><a href="#analysis">Analysis</a></li>
+                    <li><a href="/analysis">Analysis</a></li>
                 </ul>
             </nav>
         </header>
@@ -39,6 +39,7 @@
                             <th>Category</th>
                             <th>Amount</th>
                             <th>Type</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,10 +50,56 @@
                             <td>{{ transaction.cateogry }}</td>
                             <td>{{ transaction.amount }}</td>
                             <td>{{ transaction.type }}</td>
+                            <td>
+                                <form action="/delete/{{ transaction.id }}" method="POST">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+            </section>
+            <section>
+                <form action="/add" method="POST">
+                   <p>Enter your transactions </p>
+                   <label for="date">Date: </label> 
+                   <input type="date" id="date" name="date" />
+                   <label for="description">Description: </label> 
+                   <input type="text" id="description" name="description" />
+                   <label for="cateogry">Category: </label> 
+                   <select name="category">
+                        <optgroup label="Income">
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance & Gigs</option>
+                            <option value="investments">Investments</option>
+                            <option value="allowance">Allowance / Gifts</option>
+                        </optgroup>
+                        <optgroup label="Expenses">
+                            <option value="rent_mortgage">Rent / Mortgage</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="groceries">Groceries</option>
+                            <option value="dining_out">Food</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="education">Education</option>
+                            <option value="entertainment">Entertainment & Subscriptions</option>
+                            <option value="shopping">Shopping & Personal Care</option>
+                            <option value="travel">Travel</option>
+                            <option value="loans">Loan Payments</option>
+                            <option value="misc">Miscellaneous</option>
+                        </optgroup>
+                    </select>
+                   <label for="amount">Amount: </label> 
+                   <input type="amount" id="amount" name="amount" />
+                   <label for="type">Type: </label> 
+                   <select name="type">
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                   </select>
+                   <button type="submit">Add Transaction</input>
+                </form>
             </section>
         </main>
     </body>

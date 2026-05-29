@@ -23,6 +23,7 @@ def chart_spending_by_category():
     plt.tight_layout()
     fig.savefig("charts/spending_by_category.png")
     plt.close(fig)
+    return "charts/spending_by_category.png"
 
 def chart_monthly_trend():
     transactions_df = load_data()
@@ -35,6 +36,13 @@ def chart_monthly_trend():
     plt.tight_layout()
     fig.savefig("charts/monthly_trend.png")
     plt.close(fig)
+    return "charts/monthly_trend.png"
+
+def generate_all_charts():
+    return {
+        "spending_by_category": chart_spending_by_category(),
+        "monthly_trend": chart_monthly_trend()
+    }
 
 if __name__ == "__main__":
     chart_spending_by_category()
