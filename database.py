@@ -36,9 +36,13 @@ def get_all_transactions():
 def get_summary():
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
-        cursor = conn.execute("""SELECT SUM(CASE WHEN type='income' THEN amount ELSE 0 END) AS total_income,
-                     SUM(CASE WHEN type='expense'THEN amount ELSE 0 END) AS total_expenses,
-                      SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) - SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS net FROM transactions""")
+        cursor = conn.execute("""
+            SELECT 
+                PRINTF('%.2f', SUM(CASE WHEN type='income' THEN amount ELSE 0 END)) AS total_income,
+                PRINTF('%.2f', SUM(CASE WHEN type='expense' THEN amount ELSE 0 END)) AS total_expenses,
+                PRINTF('%.2f', SUM(CASE WHEN type='income' THEN amount ELSE 0 END) - SUM(CASE WHEN type='expense' THEN amount ELSE 0 END)) AS net 
+            FROM transactions
+        """)
         row = cursor.fetchone()
         return dict(row)
 

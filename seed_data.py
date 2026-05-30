@@ -47,11 +47,11 @@ def seed(months):
             target_month += 12
             target_year -= 1
         for expense, (min_amt, max_amt) in EXPENSE_CATEGORIES.items():
-            expense_amt = random.uniform(min_amt, max_amt)
+            expense_amt = round(random.uniform(min_amt, max_amt), 2)
             random_date = random_date_in_month(target_year, target_month)
             add_transaction(str(random_date), expense, expense_amt, expense, "expense")
         for income, (min_amt, max_amt) in INCOME_SOURCES.items():
-            income_amt = random.uniform(min_amt, max_amt)
+            income_amt = round(random.uniform(min_amt, max_amt), 2)
             random_date = random_date_in_month(target_year, target_month)
             add_transaction(str(random_date), income, income_amt, income, "income")           
 
