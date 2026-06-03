@@ -33,6 +33,28 @@ def get_all_transactions():
         transaction_list = [dict(row) for row in cursor.fetchall()]
         return transaction_list
     
+def get_spending_by_category():
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.execute("""
+            SELECT category, SUM(amount) as total FROM transactions WHERE type = "expense" GROUP BY category ORDER BY total DESC
+        """)
+        return [dict(row) for row in cursor.fetchall()]
+
+def get_monthly_totals():
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.execute("""
+            SELECT
+                strftime('%Y-%m', date) AS month,
+                              SUM(CASE WHEN type='income' THEN amount ELSE 0 END) AS total_monthly_income,
+                              SUM(CASE WHEN type='expense' THEN amount ELSE 0 END) AS total_monthly_expenses
+            FROM transactions
+            GROUP BY month
+            ORDER BY month
+        """)
+        return [dict(row) for row in cursor.fetchall()]
+    
 def get_summary():
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
@@ -57,4 +79,6 @@ def clear_db():
     
 if __name__ == "__main__":
     init_db()
+    print(get_spending_by_category())
+    print(get_monthly_totals())
 
