@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width" initial-scale=1.0>
-        <title>Budget Brain Analysis</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Brain Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Budget Brain Logo" class="logo">
+                <h1 class="brand-name">Budget Brain</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#transactions">Transactions</a></li>
+                <li><a href="/analysis">Analysis</a></li>
+                <li><a href="/chat">AI Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
         <h1>Analysis</h1>
-        <div>
+
+        <section class="chart-container">
             <h2>Spending By Category</h2>
-            <img src="/charts/spending_by_category.png">
-        </div>
-        <div>
+            <img src="/charts/spending_by_category.png" alt="Spending by category chart">
+        </section>
+
+        <section class="chart-container">
             <h2>Monthly Trend</h2>
-            <img src="/charts/monthly_trend.png">
-        </div>
-    </body>
+            <img src="/charts/monthly_trend.png" alt="Monthly spending trend chart">
+        </section>
+    </main>
+
+</body>
 </html>

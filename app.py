@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, redirect, url_for, send_file, jsonify
 from database import get_summary, get_all_transactions, add_transaction, delete_transaction
 from analysis import generate_all_charts
+from ai_agent import chat
 
 app = Flask(__name__)
 
@@ -33,6 +34,19 @@ def analysis():
 @app.route("/charts/<filename>")
 def serve_chart(filename):
     return send_file(f"charts/{filename}")
+
+@app.route("/chat", methods=["GET"])
+def chat_page():
+    return render_template("chat.html")
+
+@app.route("/api/chat", methods=["POST"])
+def api_chat():
+    data = request.get_json()
+    message = data["message"]
+    history = data["history"]
+    reply = chat(message, history)
+    return jsonify({"response": reply})
+
 
 if __name__ == "__main__":
     app.run(debug = True)

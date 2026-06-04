@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Brain AI Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Budget Brain Logo" class="logo">
+                <h1 class="brand-name">Budget Brain</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#transactions">Transactions</a></li>
+                <li><a href="/analysis">Analysis</a></li>
+                <li><a href="/chat">AI Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="chat-container">
+            <div id="chat-box"></div>
+            <div class="chat-input-bar">
+                <input type="text" id="user-input" placeholder="Ask about your finances...">
+                <button type="button" id="send-btn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 21L23 12 2 3v7l15 2-15 2v7z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+</body>
+
+<script>
+    let history = [];
+
+    async function sendMessage(){
+        const input = document.getElementById("user-input");
+        const message = input.value.trim();
+        if (!message) return;
+        input.value = "";
+
+        addMessage("user", message);
+
+        const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({message: message, history: history})
+        });
+        const data = await response.json();
+
+        addMessage("ai", data.response)
+
+        history.push({"role": "user", "content": message});
+        history.push({"role": "assistant", "content": data.response});
+    }
+
+    function addMessage(role, text) {
+        const box = document.getElementById("chat-box");
+        const row = document.createElement("div");
+        row.className = `message-row ${role}`;
+
+        const avatar = document.createElement("div");
+        avatar.className = "avatar-placeholder";
+        avatar.textContent = role === "ai" ? "🧠" : "Y";
+
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.textContent = text;
+
+        row.appendChild(avatar);
+        row.appendChild(bubble);
+        box.appendChild(row);
+        box.scrollTop = box.scrollHeight;
+    }
+    
+    document.getElementById("send-btn").onclick = sendMessage;
+</script>
