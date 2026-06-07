@@ -1,3 +1,4 @@
+import model
 import torch
 import torch.nn as nn
 import numpy as np
@@ -11,10 +12,10 @@ from model import SpendingAutoencoder, SpendingLSTM
 
 def prepare_autoencoder_data():
     df_transactions = pd.DataFrame(get_all_transactions())
-    le = LabelEncoder()
-    sc = StandardScaler()
     df_transactions["date"] = pd.to_datetime(df_transactions["date"])
     amount =df_transactions["amount"]
+    le = LabelEncoder()
+    sc = StandardScaler()
     category = le.fit_transform(df_transactions["category"])
     day_of_week = df_transactions["date"].dt.dayofweek
     day_of_month = df_transactions["date"].dt.day
@@ -60,4 +61,58 @@ def train_autoencoder():
     print(f"Anomaly threshold set at: {threshold:.6f}")
     return model
     
+def prepare_lstm_data():
+    monthly_totals = pd.DataFrame(get_monthly_totals())
+    expenses = monthly_totals["total_monthly_expenses"].values.reshape(-1, 1)  
+    lstm_sc = StandardScaler()
+    expenses_scaled = lstm_sc.fit_transform(expenses).flatten()
+    X, y = [], []
+    window = 3
+    for i in range(len(expenses_scaled) - window):
+        X.append(expenses_scaled[i:i+window])
+        y.append(expenses_scaled[i+window])
+    
+    X = torch.tensor(np.array(X), dtype=torch.float32).unsqueeze(-1)
+    y = torch.tensor(np.array(y), dtype=torch.float32).unsqueeze(-1)
+    
+    os.makedirs("models", exist_ok=True)
+    with open("models/lstm_scaler.pkl", "wb") as f:
+        pickle.dump(lstm_sc, f)
+    
+    return X, y
 
+def train_lstm():
+    X, y = prepare_lstm_data()
+    X_train, X_val, y_train, y_val = train_test_split(X, y, train_size=0.7, random_state=42, shuffle=False)
+    model = SpendingLSTM()
+
+    criterion = nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+    epochs = 100
+
+    for epoch in range(epochs):
+        optimizer.zero_grad()
+        output = model(X_train)
+        loss = criterion(output, y_train)
+        loss.backward()
+        optimizer.step()
+
+        model.eval()
+        with torch.no_grad():
+            val_output = model(X_val)
+            val_loss = criterion(val_output, y_val)
+        model.train()
+
+        if (epoch + 1) % 20 == 0:
+            print(f"Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}")
+    
+    torch.save(model.state_dict(), "models/lstm.pt")
+    print("Model saved to models/lstm.pt")   
+    return model
+
+if __name__ == "__main__":
+    print("Training autoencoder...")
+    train_autoencoder()
+    print("Training LSTM...")
+    train_lstm()
+    print("All models trained!")

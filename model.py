@@ -54,3 +54,4 @@ class SpendingLSTM(nn.Module):
             h_final = h_n[-1]
 
         return self.fc(h_final)
+    
