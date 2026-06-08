@@ -12,15 +12,22 @@ from model import SpendingAutoencoder, SpendingLSTM
 
 def prepare_autoencoder_data():
     df_transactions = pd.DataFrame(get_all_transactions())
+    df_transactions = df_transactions[df_transactions["type"]=="expense"]
     df_transactions["date"] = pd.to_datetime(df_transactions["date"])
-    amount =df_transactions["amount"]
+    amount =df_transactions["amount"].values
     le = LabelEncoder()
     sc = StandardScaler()
     category = le.fit_transform(df_transactions["category"])
-    day_of_week = df_transactions["date"].dt.dayofweek
-    day_of_month = df_transactions["date"].dt.day
-    month = df_transactions["date"].dt.month
-    features = np.column_stack([amount, category, day_of_week, day_of_month, month])
+    day_of_week = df_transactions["date"].dt.dayofweek.values
+    day_of_month = df_transactions["date"].dt.day.values
+    month = df_transactions["date"].dt.month.values
+    features = np.column_stack([
+        amount.astype(float),
+        category.astype(float),
+        day_of_week.astype(float),
+        day_of_month.astype(float),
+        month.astype(float)
+    ]).astype(float)
     scaled_features = sc.fit_transform(features)
     tensor = torch.tensor(scaled_features, dtype = torch.float32)
 

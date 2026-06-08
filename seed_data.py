@@ -8,7 +8,7 @@ EXPENSE_CATEGORIES = {
     "Utilities":         (80,   150),
     "Transport":         (100,  200),
     "Eating Out":        (150,  350),
-    "Coffee/Snacks":     (30,   100),
+    "Drinks/Snacks":     (30,   100),
     "Entertainment":     (40,   150),
     "Shopping":          (50,   200),
     "Health & Fitness":  (30,   120),
@@ -23,7 +23,7 @@ EXPENSE_CATEGORIES = {
 INCOME_SOURCES = {
     "Salary":                 (2800, 4000),
     "Freelance":              (0,    800),
-    "Allowance (Family)":     (0,    200),
+    "Allowance":              (0,    200),
     "Side Hustle":            (0,    300),
     "Investment/Interest":    (0,    50),
 }

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_file,
 from database import get_summary, get_all_transactions, add_transaction, delete_transaction
 from analysis import generate_all_charts
 from ai_agent import chat
+from inference import detect_anomalies, forecast_next_month
 
 app = Flask(__name__)
 
@@ -9,16 +10,19 @@ app = Flask(__name__)
 def index():
     summary = get_summary()
     transactions = get_all_transactions()
-    return render_template("index.html", summary=summary, transactions=transactions )
+    anomalies = detect_anomalies()
+    forecast = forecast_next_month()
+    return render_template("index.html", summary=summary, transactions=transactions, anomalies=anomalies, forecast=forecast)
 
 @app.route("/add", methods=["POST"])
 def add():
-    date= request.form["date"]
-    description= request.form["description"]
-    category= request.form["category"]
-    amount= request.form["amount"]
-    type= request.form["type"]
-    add_transaction(date, description, category, amount, type)
+    date = request.form["date"]
+    description = request.form["description"]
+    category = request.form["category"]
+    amount = request.form["amount"]
+    type = request.form["type"]
+    print(f"DEBUG: date={date}, desc={description}, amount={amount}, cat={category}, type={type}")
+    add_transaction(date, description, amount, category, type)
     return redirect(url_for("index"))
 
 @app.route("/delete/<int:id>", methods=["POST"])
@@ -28,7 +32,7 @@ def delete(id):
 
 @app.route("/analysis")
 def analysis():
-    charts= generate_all_charts()
+    charts = generate_all_charts()
     return render_template("analysis.html", charts=charts)
 
 @app.route("/charts/<filename>")
@@ -47,6 +51,5 @@ def api_chat():
     reply = chat(message, history)
     return jsonify({"response": reply})
 
-
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug=True)

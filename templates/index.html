@@ -51,6 +51,16 @@
         </div>
 
     </section>
+
+    {% if anomalies %}
+    <div class="anomaly-banner">
+        ⚠️ {{ anomalies|length }} unusual transaction(s) detected
+    </div>
+    {% endif %}
+
+    <div class="forecast-card">
+        <p>Next month predicted expenses: <strong>RM {{ "%.2f"|format(forecast) }}</strong></p>
+    </div>
     
     <div class="transaction-main">
 
@@ -77,7 +87,7 @@
 
                     <tbody>
                         {% for transaction in transactions %}
-                        <tr>
+                        <tr class="{% for a in anomalies %}{% if a.id == transaction.id %}anomaly-row{% endif %}{% endfor %}">
                             <td>{{ transaction.date }}</td>
                             <td>{{ transaction.description }}</td>
                             <td>{{ transaction.category }}</td>
@@ -145,26 +155,30 @@
                     <select id="category" name="category">
 
                         <optgroup label="Income">
-                            <option value="salary">Salary</option>
-                            <option value="freelance">Freelance & Gigs</option>
-                            <option value="investments">Investments</option>
-                            <option value="allowance">Allowance / Gifts</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Freelance">Freelance & Gigs</option>
+                            <option value="Investments/Interest">Investments</option>
+                            <option value="Allowance">Allowance / Gifts</option>
+                            <option value="Side Hustle">Side Hustle</option>
+
                         </optgroup>
 
                         <optgroup label="Expenses">
-                            <option value="rent_mortgage">Rent / Mortgage</option>
-                            <option value="utilities">Utilities</option>
-                            <option value="groceries">Groceries</option>
-                            <option value="dining_out">Food</option>
-                            <option value="transportation">Transportation</option>
-                            <option value="insurance">Insurance</option>
-                            <option value="healthcare">Healthcare</option>
-                            <option value="education">Education</option>
-                            <option value="entertainment">Entertainment & Subscriptions</option>
-                            <option value="shopping">Shopping & Personal Care</option>
-                            <option value="travel">Travel</option>
-                            <option value="loans">Loan Payments</option>
-                            <option value="misc">Miscellaneous</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Eating Out">Food</option>
+                            <option value="Transport">Transportation</option>
+                            <option value="Subscriptions">Subscriptions</option>
+                            <option value="Health & Fitness">Healthcare</option>
+                            <option value="Entertainment">Entertainment & Subscriptions</option>
+                            <option value="Shopping">Shopping & Personal Care</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Drinks/Snacks">Drinks & Snacks</option>
+                            <option value="Gifts/Donations">Miscellaneous</option>
+                            <option value="Savings">Savings</option>
+                            <option value="Emergency Fund">Emergency Fund</option>
+                            <option value="Student Loan">Student Loan</option>
                         </optgroup>
 
                     </select>

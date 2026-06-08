@@ -22,7 +22,10 @@ def init_db():
 def add_transaction(date, description, amount, category, type):
     with sqlite3.connect(DB_PATH) as conn:
         try:
-            conn.execute("INSERT INTO transactions (date, description, amount, category, type) VALUES (?, ?, ?, ?, ?)", (date, description, amount, category, type))
+            conn.execute(
+            "INSERT INTO transactions (date, description, amount, category, type) VALUES (?, ?, ?, ?, ?)",
+            (date, description, float(amount), category, type)
+        )
         except Exception as e:
             print(f"Error: {e}")
 
