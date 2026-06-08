@@ -21,7 +21,6 @@ def add():
     category = request.form["category"]
     amount = request.form["amount"]
     type = request.form["type"]
-    print(f"DEBUG: date={date}, desc={description}, amount={amount}, cat={category}, type={type}")
     add_transaction(date, description, amount, category, type)
     return redirect(url_for("index"))
 
