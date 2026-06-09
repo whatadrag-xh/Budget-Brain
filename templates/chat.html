@@ -80,5 +80,11 @@
         box.scrollTop = box.scrollHeight;
     }
     
-    document.getElementById("send-btn").onclick = sendMessage;
+    document.getElementById("send-btn").addEventListener("click", sendMessage);
+    document.getElementById("user-input").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
 </script>
