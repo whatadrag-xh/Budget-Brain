@@ -40,7 +40,7 @@ def detect_anomalies():
         errors = model.reconstruction_error(tensor).numpy()
         df_transactions["anomaly_score"] = errors
         df_transactions["is_anomaly"] = df_transactions["anomaly_score"] > threshold
-        anomalies = df_transactions[df_transactions["is_anomaly"]==True][["date", "description", "category", "amount", "type", "anomaly_score"]].to_dict("records")
+        anomalies = df_transactions[df_transactions["is_anomaly"]==True][["id", "date", "description", "category", "amount", "type", "anomaly_score"]].to_dict("records")
         return anomalies
     
 def forecast_next_month():

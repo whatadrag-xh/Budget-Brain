@@ -177,10 +177,6 @@ body {
     gap: 8px;
 }
 
-.anomaly-row {
-    background: rgba(220, 38, 38, 0.05);
-}
-
 .forecast-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -416,6 +412,12 @@ body {
 
 .delete-btn:active {
     transform: scale(0.96);
+}
+
+.transactions-table tbody tr.anomaly-row,
+.transactions-table tbody tr.anomaly-row:nth-child(even) {
+    background-color: rgba(220, 38, 38, 0.08) !important;
+    border-left: 3px solid #DC2626;
 }
 
 .transaction-form {

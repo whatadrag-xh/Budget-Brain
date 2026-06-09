@@ -62,7 +62,7 @@ def train_autoencoder():
     torch.save(model.state_dict(), "models/autoencoder.pt")
     print("Model saved to models/autoencoder.pt")
     errors = model.reconstruction_error(train_data).numpy()
-    threshold = float(np.percentile(errors, 95))
+    threshold = float(np.percentile(errors, 99))
     with open("models/threshold.pkl", "wb") as f:
         pickle.dump(threshold, f)
     print(f"Anomaly threshold set at: {threshold:.6f}")

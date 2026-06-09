@@ -4,28 +4,28 @@ from database import init_db, add_transaction, clear_db
 
 EXPENSE_CATEGORIES = {
     "Rent":              (1000,  1000),
-    "Groceries":         (150,  350),
-    "Utilities":         (80,   150),
-    "Transport":         (100,  200),
-    "Eating Out":        (150,  350),
-    "Drinks/Snacks":     (30,   100),
+    "Groceries":         (150,  500),
+    "Utilities":         (80,   350),
+    "Transport":         (100,  400),
+    "Eating Out":        (150,  700),
+    "Drinks/Snacks":     (30,   250),
     "Entertainment":     (40,   150),
-    "Shopping":          (50,   200),
-    "Health & Fitness":  (30,   120),
+    "Shopping":          (50,   1000),
+    "Health & Fitness":  (30,   500),
     "Student Loan":      (500,  500),
     "Savings":           (200,  500),
-    "Emergency Fund":    (100,  300),
+    "Emergency Fund":    (100,  5000),
     "Gifts/Donations":   (20,   100),
-    "Travel":            (0,    150),
-    "Subscriptions":     (20,   60),
+    "Travel":            (0,    10000),
+    "Subscriptions":     (20,   300),
 }
 
 INCOME_SOURCES = {
-    "Salary":                 (2800, 4000),
+    "Salary":                 (2800, 50000),
     "Freelance":              (0,    800),
-    "Allowance":              (0,    200),
-    "Side Hustle":            (0,    300),
-    "Investment/Interest":    (0,    50),
+    "Allowance":              (0,    1000),
+    "Side Hustle":            (0,    2000),
+    "Investment/Interest":    (0,    5000),
 }
 
 def random_date_in_month(year, month):
