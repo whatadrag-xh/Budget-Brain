@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap');
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -715,4 +715,248 @@ body {
     width: 20px;
     height: 20px;
     fill: white;
+}
+
+/*login page*/
+body:has(.auth-page) {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.auth-page {
+    width: 1200px;
+    height: 750px;
+    background: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.auth-left {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+#login-page-wallpaper {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.auth-left h3:first-of-type {
+    position: absolute;
+    bottom: 170px;
+    left: 50px;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1.05;
+    max-width: 400px;
+}
+
+.auth-left h3:last-of-type {
+    position: absolute;
+    bottom: 90px;
+    left: 50px;
+    color: rgba(255,255,255,0.9);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 380px;
+    line-height: 1.6;
+}
+
+.auth-right {
+    flex: 1;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 70px;
+    position: relative;
+}
+
+.logo.login-page {
+    width: 35px;
+    position: absolute;
+    top: 45px;
+    left: 70px;
+}
+
+.brand-name.login-page {
+    position: absolute;
+    top: 48px;
+    left: 115px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #111;
+}
+
+.auth-right h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 12px;
+}
+
+.auth-right > h4 {
+    color: #666;
+    font-weight: 400;
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+form label {
+    font-size: 0.95rem;
+    color: #222;
+    font-weight: 500;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    background: #f3f4f6;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    background: #eceef2;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.remember-me label[for="checkbox"]{
+    margin: 0;
+    position: absolute;
+    left: 93px;
+    pointer-events: none;
+}
+
+form input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 5px;
+    border: 2px solid lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form input[type="checkbox"]:checked {
+    background-color: blue;
+    border-color: blue;
+}
+
+form input[type="checkbox"]:checked::after {
+    content:"✔";
+    color: white;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 25px;
+    height: 55px;
+    border: none;
+    border-radius: 10px;
+    background: #000;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #222;
+}
+
+.flash {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.flash-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.flash-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.auth-right > h4:last-child {
+    margin-top: 30px;
+    text-align: center;
+    color: #666;
+}
+
+.auth-right > h4:last-child a {
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-right > h4:last-child a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1000px) {
+    .auth-page {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .auth-left {
+        height: 300px;
+    }
+
+    .auth-left h3:first-of-type {
+        font-size: 2.2rem;
+        bottom: 90px;
+    }
+
+    .auth-left h3:last-of-type {
+        bottom: 40px;
+    }
+
+    .auth-right {
+        padding: 40px;
+    }
+
+    .logo.login-page,
+    .brand-name.login-page {
+        position: static;
+    }
 }
