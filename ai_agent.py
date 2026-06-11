@@ -6,11 +6,11 @@ client = OpenAI(
     api_key="ollama"
 )
 
-def build_context():
-    summary = get_summary()
-    monthly_totals = get_monthly_totals()
-    spending_by_category = get_spending_by_category()
-    recent = get_all_transactions()[-10:]
+def build_context(user_id):
+    summary = get_summary(user_id)
+    monthly_totals = get_monthly_totals(user_id)
+    spending_by_category = get_spending_by_category(user_id)
+    recent = get_all_transactions(user_id)[-10:]
 
     context = f"""You are a personal finance assistant. Answer ONLY questions about the user's finances.
 Rules:

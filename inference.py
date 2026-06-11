@@ -17,9 +17,12 @@ def load_autoencoder():
     model.eval()
     return model, scaler, label_encoder, threshold
 
-def detect_anomalies():
+def detect_anomalies(user_id):
+    transactions = get_all_transactions(user_id)
+    if not transactions:
+        return []
     model, scaler, label_encoder, threshold = load_autoencoder()
-    df_transactions = pd.DataFrame(get_all_transactions())
+    df_transactions = pd.DataFrame(get_all_transactions(user_id))
     df_transactions = df_transactions[df_transactions["type"]=="expense"]
     df_transactions["date"] = pd.to_datetime(df_transactions["date"])
     df_transactions["category_encoded"] = df_transactions["category"].apply(
@@ -43,13 +46,15 @@ def detect_anomalies():
         anomalies = df_transactions[df_transactions["is_anomaly"]==True][["id", "date", "description", "category", "amount", "type", "anomaly_score"]].to_dict("records")
         return anomalies
     
-def forecast_next_month():
+def forecast_next_month(user_id):
+    monthly = get_monthly_totals(user_id)
+    if len(monthly) < 3:
+        return None
     lstm_model = SpendingLSTM()
     lstm_model.load_state_dict(torch.load("models/lstm.pt"))
     lstm_model.eval()
     with open("models/lstm_scaler.pkl", "rb") as f:
         scaler = pickle.load(f)
-    monthly = get_monthly_totals()
     last_3 = [m["total_monthly_expenses"] for m in monthly[-3:]]
     scaled = scaler.transform(np.array(last_3).reshape(-1, 1)).flatten()
     lstm_input = torch.tensor(scaled, dtype=torch.float32).unsqueeze(0).unsqueeze(-1)
@@ -59,10 +64,10 @@ def forecast_next_month():
         return predicted_expense[0][0]
     
 if __name__ == "__main__":
-    anomalies = detect_anomalies()
+    anomalies = detect_anomalies(user_id)
     print("Anomalies detected:")
     for a in anomalies:
         print(a)
     
-    next_month_expense = forecast_next_month()
+    next_month_expense = forecast_next_month(user_id)
     print(f"Predicted total expenses for next month: {next_month_expense:.2f}")

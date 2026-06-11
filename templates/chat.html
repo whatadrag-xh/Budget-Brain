@@ -15,11 +15,12 @@
                 <h1 class="brand-name">Budget Brain</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#dashboard">Dashboard</a></li>
-                <li><a href="#transactions">Transactions</a></li>
-                <li><a href="/analysis">Analysis</a></li>
-                <li><a href="/chat">AI Chat</a></li>
-            </ul>
+            <li><a href="{{ url_for('index') }}#dashboard">Dashboard</a></li>
+            <li><a href="{{ url_for('index') }}#transactions">Transactions</a></li>
+            <li><a href="{{ url_for('analysis') }}">Analysis</a></li>
+            <li><a href="{{ url_for('chat_page') }}">AI Chat</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
         </nav>
     </header>
     <main>

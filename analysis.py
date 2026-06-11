@@ -6,14 +6,18 @@ import seaborn as sns
 import os 
 from database import get_all_transactions
 
-def load_data():
-    all_transactions = get_all_transactions()
+def load_data(user_id):
+    all_transactions = get_all_transactions(user_id)
+    if not all_transactions:
+        return pd.DataFrame()
     transactions_df = pd.DataFrame(all_transactions)
     transactions_df["date"] = pd.to_datetime(transactions_df["date"])
     return transactions_df
 
-def chart_spending_by_category():
-    transactions_df = load_data()
+def chart_spending_by_category(user_id):
+    transactions_df = load_data(user_id)
+    if transactions_df.empty:
+        return None
     expenses_df = transactions_df[transactions_df["type"] == "expense"]
     category_totals = expenses_df.groupby("category")["amount"].sum().reset_index()
     fig, ax = plt.subplots(figsize=(8,5))
@@ -25,8 +29,10 @@ def chart_spending_by_category():
     plt.close(fig)
     return "charts/spending_by_category.png"
 
-def chart_monthly_trend():
-    transactions_df = load_data()
+def chart_monthly_trend(user_id):
+    transactions_df = load_data(user_id)
+    if transactions_df.empty:
+        return None
     transactions_df["month"] = transactions_df["date"].dt.to_period("M")
     monthly_transactions_df = transactions_df.groupby(["month", "type"])["amount"].sum().reset_index()
     fig, ax = plt.subplots(figsize=(8,5))
@@ -38,13 +44,13 @@ def chart_monthly_trend():
     plt.close(fig)
     return "charts/monthly_trend.png"
 
-def generate_all_charts():
+def generate_all_charts(user_id):
     return {
-        "spending_by_category": chart_spending_by_category(),
-        "monthly_trend": chart_monthly_trend()
+        "spending_by_category": chart_spending_by_category(user_id),
+        "monthly_trend": chart_monthly_trend(user_id)
     }
 
 if __name__ == "__main__":
-    chart_spending_by_category()
-    chart_monthly_trend()
+    chart_spending_by_category(user_id)
+    chart_monthly_trend(user_id)
     print("Charts saved!")

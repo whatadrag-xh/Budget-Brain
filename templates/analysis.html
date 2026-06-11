@@ -15,26 +15,34 @@
                 <h1 class="brand-name">Budget Brain</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#dashboard">Dashboard</a></li>
-                <li><a href="#transactions">Transactions</a></li>
-                <li><a href="/analysis">Analysis</a></li>
-                <li><a href="/chat">AI Chat</a></li>
-            </ul>
+            <li><a href="{{ url_for('index') }}#dashboard">Dashboard</a></li>
+            <li><a href="{{ url_for('index') }}#transactions">Transactions</a></li>
+            <li><a href="{{ url_for('analysis') }}">Analysis</a></li>
+            <li><a href="{{ url_for('chat_page') }}">AI Chat</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
         </nav>
     </header>
 
     <main>
         <h1>Analysis</h1>
-
+        {% if charts.spending_by_category %}
         <section class="chart-container">
             <h2>Spending By Category</h2>
             <img src="/charts/spending_by_category.png" alt="Spending by category chart">
         </section>
-
+        {% else %}
+        <p>No transactions found. Add some transactions to see the analysis charts.</p>
+        {% endif %}
+        
+        {% if charts.monthly_trend %}
         <section class="chart-container">
             <h2>Monthly Trend</h2>
             <img src="/charts/monthly_trend.png" alt="Monthly spending trend chart">
         </section>
+        {% else %}
+        <p>No monthly trend data available.</p>
+        {% endif %}
     </main>
 
 </body>

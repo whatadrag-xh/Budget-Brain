@@ -750,25 +750,25 @@ body:has(.auth-page) {
     object-fit: cover;
 }
 
-.auth-left h3:first-of-type {
+.auth-left h3.login-page-h3:first-of-type {
     position: absolute;
     bottom: 170px;
     left: 50px;
-    color: white;
+    color: #146321;
     font-family: 'Playfair Display', serif;
     font-size: 3.5rem;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.05;
     max-width: 400px;
 }
 
-.auth-left h3:last-of-type {
+.auth-left h3.login-page-h3:last-of-type {
     position: absolute;
-    bottom: 90px;
+    bottom: 100px;
     left: 50px;
-    color: rgba(255,255,255,0.9);
+    color: #146321;
     font-size: 1rem;
-    font-weight: 300;
+    font-weight: 400;
     max-width: 380px;
     line-height: 1.6;
 }
@@ -783,20 +783,23 @@ body:has(.auth-page) {
     position: relative;
 }
 
-.logo.login-page {
-    width: 35px;
+.logo.login-register-page {
+    width: 60px;
+    height: 60px;
     position: absolute;
-    top: 45px;
-    left: 70px;
+    top: 30px;
+    left: 247px;
 }
 
-.brand-name.login-page {
+.brand-name.login-register-page {
     position: absolute;
-    top: 48px;
-    left: 115px;
-    font-size: 1rem;
-    font-weight: 500;
+    top: 42px;
+    left: 290px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
     color: #111;
+    letter-spacing: -0.5px;
 }
 
 .auth-right h1 {
@@ -954,9 +957,35 @@ button:hover {
     .auth-right {
         padding: 40px;
     }
+}
 
-    .logo.login-page,
-    .brand-name.login-page {
-        position: static;
-    }
+/*register page*/
+#register-page-wallpaper {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+}
+
+.auth-left h3.register-page-h3:first-of-type {
+    position: absolute;
+    bottom: 170px;
+    left: 50px;
+    color: #9a0002;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    line-height: 1.05;
+    max-width: 400px;
+}
+
+.auth-left h3.register-page-h3:last-of-type {
+    position: absolute;
+    bottom: 100px;
+    left: 50px;
+    color: #9a0002;
+    font-size: 1rem;
+    font-weight: 400;
+    max-width: 380px;
+    line-height: 1.6;
 }

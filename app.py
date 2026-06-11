@@ -61,8 +61,8 @@ def logout():
 def index():
     summary = get_summary(current_user.id)
     transactions = get_all_transactions(current_user.id)
-    anomalies = detect_anomalies()
-    forecast = forecast_next_month()
+    anomalies = detect_anomalies(current_user.id)
+    forecast = forecast_next_month(current_user.id)
     return render_template("index.html", summary=summary, transactions=transactions, anomalies=anomalies, forecast=forecast)
 
 @app.route("/add", methods=["POST"])
@@ -85,7 +85,7 @@ def delete(id):
 @app.route("/analysis")
 @login_required
 def analysis():
-    charts = generate_all_charts()
+    charts = generate_all_charts(current_user.id)
     return render_template("analysis.html", charts=charts)
 
 @app.route("/charts/<filename>")

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Brain</title>
+    <title>Budget Brain Login Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -15,16 +15,16 @@
                 alt="login-page-wallpaper"
                 id="login-page-wallpaper"
             >
-            <h3>Rock Lee counted every push-up.</h3>
-            <h3>Count every dollar.</h3>
+            <h3 class="login-page-h3">Rock Lee counted every push-up.</h3>
+            <h3 class="login-page-h3">Count every dollar.</h3>
         </div>
         <div class="auth-right">
             <img
                 src="{{ url_for('static', filename='logo.png') }}"
                 alt="Budget Brain Logo"
-                class="logo login-page"
+                class="logo login-register-page"
             >
-            <h3 class="brand-name login-page">Budget Brain</h3>
+            <h3 class="brand-name login-register-page">Budget Brain</h3>
             <h1>Welcome back</h1>
             <h4>Enter your username and password to access your account.</h4>
             {% with messages = get_flashed_messages(with_categories=true) %}
