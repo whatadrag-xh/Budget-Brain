@@ -80,6 +80,13 @@ def get_summary(user_id):
         """, (user_id,))
         row = cursor.fetchone()
         return dict(row)
+    
+def update_transaction(id, date, description, amount, category, type, user_id):
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute(
+            "UPDATE transactions SET date = ?, description = ?, amount = ?, category = ?, type = ? WHERE id = ? AND user_id = ?",
+            (date, description, float(amount), category, type, id, user_id)
+        )
 
 def delete_transaction(id, user_id):
     with sqlite3.connect(DB_PATH) as conn:

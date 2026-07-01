@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, send_file, jsonify, flash
-from database import get_summary, get_all_transactions, add_transaction, delete_transaction
+from database import get_summary, get_all_transactions, add_transaction, delete_transaction, update_transaction
 from analysis import generate_all_charts
 from ai_agent import chat
 from inference import detect_anomalies, forecast_next_month
@@ -74,6 +74,17 @@ def add():
     amount = request.form["amount"]
     type = request.form["type"]
     add_transaction(date, description, amount, category, type, current_user.id)
+    return redirect(url_for("index"))
+
+@app.route("/edit/<int:id>", methods=["POST"])
+@login_required
+def edit(id):
+    date = request.form["date"]
+    description = request.form["description"]
+    category = request.form["category"]
+    amount = request.form["amount"]
+    type = request.form["type"]
+    update_transaction(id, date, description, amount, category, type, current_user.id)
     return redirect(url_for("index"))
 
 @app.route("/delete/<int:id>", methods=["POST"])

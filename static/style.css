@@ -389,11 +389,21 @@ body {
     text-align: center;
 }
 
-.delete-btn {
+.transactions-table td form {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+.edit-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 14px;
+    margin:0 auto;
+    display: block;
+    padding: 4px 12px;
+    width: 65px;
+    height:30px;
     background: rgba(98, 190, 221, 0.1);
     color: rgb(18, 64, 80);
     border: none;
@@ -403,15 +413,92 @@ body {
     cursor: pointer;
     transition: background-color var(--transition), transform var(--transition);
     white-space: nowrap;
+    letter-spacing: 0.2px;
 }
 
-.delete-btn:hover {
-    background: rgba(63, 95, 236, 0.18);
+.edit-btn:hover {
+    background: rgba(103, 118, 185, 0.18);
     transform: scale(1.04);
 }
 
-.delete-btn:active {
+.edit-btn:active {
     transform: scale(0.96);
+}
+
+.transactions-table td:nth-child(6) {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-box {
+    background: var(--card-bg);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    width: 480px;
+    max-width: 90vw;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-box h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.btn-delete-text {
+    background: none;
+    border: none;
+    color: var(--expense-color);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+.btn-delete-text:hover {
+    text-decoration: underline;
+    background: none;
+}
+
+.btn-save {
+    height: 44px;
+    padding: 0 28px;
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.btn-save:hover {
+    background: #1D4ED8;
 }
 
 .transactions-table tbody tr.anomaly-row,
